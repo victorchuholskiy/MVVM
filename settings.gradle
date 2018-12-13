@@ -1,0 +1,8 @@
+pluginManagement {
+	repositories {
+		maven { url "https://nexus.inside.cactussoft.biz/repository/maven-public/" }
+		gradlePluginPortal()
+	}
+}
+
+include ':app'

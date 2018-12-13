@@ -1,0 +1,171 @@
+buildscript {
+	repositories {
+		maven { url "https://nexus.inside.cactussoft.biz/repository/maven-public/" }
+	}
+
+	dependencies {
+		classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.3'
+	}
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'io.fabric'
+apply plugin: 'com.getkeepsafe.dexcount'
+apply from: './jacoco.gradle'
+
+android {
+	compileSdkVersion 28
+	buildToolsVersion '28.0.3'
+	testOptions.unitTests.includeAndroidResources = true
+
+	defaultConfig {
+		applicationId "com.drg.arch.mvvm"
+		minSdkVersion 21
+		targetSdkVersion 28
+		versionCode System.getenv('CI_PIPELINE_IID') as Integer ?: 1
+		versionName "1.0"
+		testInstrumentationRunner "com.github.tmurakami.dexopener.DexOpenerAndroidJUnitRunner"
+
+		buildConfigField "String", "MAIN_API_URL", "\"http://demo9989596.mockable.io/\""
+		buildConfigField "String", "AUTH_API_URL", "\"http://demo9989596.mockable.io/\""
+		buildConfigField "String", "MAP_API_URL", "\"http://demo9282501.mockable.io/\""
+
+		// fabric crashlytics beta
+		ext.betaDistributionGroupAliases = "drg"
+
+		multiDexEnabled true
+	}
+
+	signingConfigs {
+		release {
+			keyAlias 'qwerty'
+			keyPassword 'qwerty'
+			storeFile file('../keystore.jks')
+			storePassword 'qwerty'
+		}
+	}
+
+	buildTypes {
+		debug {
+			testCoverageEnabled true
+			applicationIdSuffix '.debug'
+			versionNameSuffix '-debug'
+		}
+		release {
+			minifyEnabled false
+			signingConfig signingConfigs.release
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+
+	dataBinding {
+		enabled = true
+	}
+}
+
+dependencies {
+	implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+	implementation 'com.android.support:multidex:1.0.3'
+
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+	// Android
+	implementation ('com.android.support:appcompat-v7:28.0.0') {
+		exclude group: 'com.google.android.gms', module: 'play-services-basement'
+	}
+	implementation ('com.android.support:recyclerview-v7:28.0.0') {
+		exclude group: 'com.google.android.gms', module: 'play-services-basement'
+	}
+	implementation ('com.android.support:design:28.0.0') {
+		exclude group: 'com.google.android.gms', module: 'play-services-basement'
+	}
+
+	// Google Maps
+	implementation 'com.google.android.gms:play-services-maps:16.0.0'
+	implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+	// Firebase
+	implementation('com.google.firebase:firebase-core:16.0.3') {
+		exclude group: "com.android.support"
+		exclude group: 'com.google.android.gms', module: 'play-services-basement'
+	}
+
+	// Lifecycle
+	implementation "android.arch.lifecycle:extensions:1.1.1"
+	kapt "android.arch.lifecycle:compiler:1.1.1"
+
+	// Gson
+	implementation 'com.google.code.gson:gson:2.8.5'
+
+	// OkHttp3
+	implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+	implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.11.0'
+	implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+
+	// Retrofit2
+	implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+	implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+	implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+	// Rx2
+	implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+	implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
+	// Dagger2
+	implementation 'com.google.dagger:dagger:2.16'
+	implementation 'com.google.dagger:dagger-android-support:2.16'
+	kapt 'com.google.dagger:dagger-compiler:2.16'
+	kapt 'com.google.dagger:dagger-android-processor:2.16'
+	kaptAndroidTest 'com.google.dagger:dagger-compiler:2.16'
+	kaptAndroidTest 'com.google.dagger:dagger-android-processor:2.16'
+
+	// Prefs
+	implementation 'com.github.nalulabs.prefs-delegates:prefs-delegates:0.1'
+
+	/* analytics */
+
+	implementation 'com.crashlytics.sdk.android:crashlytics:2.9.6'
+
+	/* test */
+	testImplementation 'junit:junit:4.12'
+	testImplementation 'org.mockito:mockito-core:2.22.0'
+	testImplementation 'android.arch.core:core-testing:1.1.1'
+	testImplementation 'org.robolectric:robolectric:4.0.2'
+	testImplementation 'org.robolectric:shadows-play-services:3.3.2'
+	testImplementation 'org.robolectric:shadows-maps:3.3.2'
+	testImplementation 'org.robolectric:shadows-multidex:3.3.2'
+	testImplementation 'androidx.test:core:1.0.0'
+
+	/* android test */
+	androidTestImplementation 'com.github.tmurakami:dexopener:1.0.4'
+	androidTestImplementation ('com.android.support.test:rules:1.0.2') {
+		exclude group: 'com.google.android.gms', module: 'play-services-basement'
+	}
+	androidTestImplementation ('com.android.support.test:runner:1.0.2') {
+		exclude group: 'com.google.android.gms', module: 'play-services-basement'
+	}
+	androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+	androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
+	androidTestImplementation "org.mockito:mockito-android:2.22.0"
+}
+
+dexcount {
+	format = "list"
+	includeClasses = false
+	includeClassCount = false
+	includeFieldCount = true
+	includeTotalMethodCount = false
+	orderByMethodCount = false
+	verbose = false
+	maxTreeDepth = Integer.MAX_VALUE
+	teamCityIntegration = false
+	teamCitySlug = null
+	runOnEachPackage = true
+	//maxMethodCount = 64000
+}
+
+apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,48 @@
+<resources>
+
+	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+		<item name="android:windowTranslucentStatus">true</item>
+
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+
+		<item name="dialogTheme">@style/CustomDialog</item>
+		<item name="alertDialogTheme">@style/CustomDialog.Alert</item>
+
+	</style>
+
+	<!-- toolbar -->
+
+	<style name="Base.ToolbarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+		<item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+		<item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+		<item name="android:background">?colorPrimary</item>
+		<!-- v19+ -->
+		<item name="android:paddingTop">@dimen/status_bar_size</item>
+	</style>
+
+	<style name="ToolbarStyle" parent="Base.ToolbarStyle" />
+
+	<!-- dialog -->
+
+	<style name="CustomDialog" parent="Theme.AppCompat.Light.Dialog">
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+	</style>
+
+	<style name="CustomDialog.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+	</style>
+
+	<!-- other -->
+
+	<style name="DrawerHeaderTheme" parent="ThemeOverlay.AppCompat">
+		<item name="android:background">#775566</item>
+	</style>
+
+</resources>

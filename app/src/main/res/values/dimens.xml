@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="offset_4">4dp</dimen>
+	<dimen name="offset_8">8dp</dimen>
+	<dimen name="offset_16">16dp</dimen>
+	<dimen name="status_bar_size">24dp</dimen>
+</resources>

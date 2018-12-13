@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<data>
+
+		<variable
+			name="viewModel"
+			type="com.drg.arch.mvvm.screen.dashboard.pages.home.HomeFragmentViewModel" />
+	</data>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:text="@{viewModel.homeText}"
+			android:textSize="32sp" />
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="50dp"
+			android:onClick='@{()->viewModel.onDoBtnClick()}'
+			android:text="@string/_do" />
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="110dp"
+			android:onClick='@{()->viewModel.onUserListBtnClick()}'
+			android:text="@string/user_list" />
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="170dp"
+			android:onClick='@{()->viewModel.onBeerListBtnClick()}'
+			android:text="@string/beer_list" />
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="230dp"
+			android:onClick='@{()->viewModel.onEncryptBtnClick()}'
+			android:text="@string/encrypt" />
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="290dp"
+			android:onClick='@{()->viewModel.onMapBtnClick()}'
+			android:text="@string/map" />
+	</FrameLayout>
+</layout>

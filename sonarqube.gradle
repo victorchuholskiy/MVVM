@@ -1,0 +1,55 @@
+sonarqube {
+
+	properties {
+
+		/* SonarQube needs to be informed about your libraries and the android.jar to understand that methods like
+		* onResume() is called by the Android framework. Without that information SonarQube will very likely create warnings
+		* that those methods are never used and they should be removed. Same applies for libraries where parent classes
+		* are required to understand how a class works and is used. */
+//		def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-28/android.jar," +
+//				"${project.buildDir}/intermediates/exploded-aar/**/classes.jar"
+
+		def libraries = "build/intermediates/exploded-aar/**/classes.jar"
+
+		// connection
+//		property "sonar.host.url", "https://sonarqube.inside.cactussoft.biz"
+		property "sonar.host.url", "https://sonar.inside.cactussoft.biz"
+		property "sonar.login", "6f047cfecfbbaccbf96a4e3a680695e294ec473a"
+
+		// project
+		property "sonar.projectName", "Internal-MVVM-Arch-Android"
+		property "sonar.projectKey", "com.drg.arch.mvvm"
+		property "sonar.sourceEncoding", "UTF-8"
+
+//		property "sonar.report.export.path", "sonar-report.json"
+//		property "detekt.sonar.kotlin.config.path", "default-detekt-config.yml"
+
+		// sources
+		property "sonar.sources", "src/main/java"
+		property "sonar.binaries", "build/intermediates/classes/debug,build/tmp/kotlin-classes"
+		property "sonar.java.binaries", "build/intermediates/classes/debug,build/tmp/kotlin-classes"
+
+		// tests
+		property "sonar.tests", "src/test/java,src/androidTest/java"
+		property "sonar.java.test.binaries", "build/intermediates/classes/debug,build/tmp/kotlin-classes"
+		property "sonar.junit.reportsPath", "build/test-results/testDebugUnitTest"
+
+		// jacoco
+		property "sonar.java.coveragePlugin", "jacoco"
+		def unit = fileTree(dir: project.projectDir, includes: ['**/*.exec']).files
+		def ui = fileTree(dir: project.projectDir, includes: ['**/*.ec']).files
+		unit.addAll(ui)
+		def files = unit.join(", ")
+		property "sonar.jacoco.reportPaths", files
+
+		// other
+//		property "sonar.android.lint.report", "build/reports/lint-results.xml"
+		property "sonar.androidLint.reportPaths", "build/reports/lint-results.xml"
+
+		// exclusion & libs
+		property "sonar.exclusions", "**/build/**,**/*.png,*.iml,**/*generated*,**/*.css,**/*.html"
+		property "sonar.libraries", libraries
+		property "sonar.java.libraries", libraries
+		property "sonar.java.test.libraries", libraries
+	}
+}

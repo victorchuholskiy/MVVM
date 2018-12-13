@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+
+		<variable
+			name="beer"
+			type="com.drg.arch.mvvm.data.entity.remote.common.BeerRemote" />
+	</data>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="@dimen/offset_8"
+			android:text='@{@string/brewery + beer.brewery}'
+			tools:text="Brewery" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="@dimen/offset_8"
+			android:text='@{@string/name + beer.name}'
+			tools:text="Name" />
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/offset_8"
+				android:text='@{@string/alcohol + beer.alc}'
+				tools:text="Alcohol" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/offset_8"
+				android:text='@{@string/ibu + beer.ibu}'
+				tools:text="IBU" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/offset_8"
+				android:text='@{@string/plate + beer.plate}'
+				tools:text="Plate" />
+		</LinearLayout>
+
+	</LinearLayout>
+</layout>
